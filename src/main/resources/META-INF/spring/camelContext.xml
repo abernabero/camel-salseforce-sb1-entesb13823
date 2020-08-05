@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+
+    <camelContext xmlns="http://camel.apache.org/schema/spring" id="salesforce-context" >
+        <route>
+            <from uri="salesforce:CamelTestTopic?sObjectName=Case&amp;sObjectQuery=SELECT Id, CaseNumber FROM Case"/>
+            <log message="The message contains ${body}"/>
+            <to uri="mock:result"/>
+        </route>
+
+        <route>
+            <from uri="salesforce:CamelTestTopic?sObjectName=Account&amp;sObjectQuery=SELECT Id, Name FROM Account"/>
+            <to uri="mock:result"/>
+        </route>
+
+        <route>
+            <from uri="salesforce:CamelTestTopic?sObjectName=Lead&amp;replayId=-2"/>
+            <to uri="mock:replayIdTest"/>
+        </route>
+
+        <route>
+            <from uri="salesforce:CamelTestTopic?sObjectName=Account&amp;sObjectQuery=SELECT Id, BillingStreet FROM Account"/>
+            <log message="before enrich ${body}" />
+            <to uri="mock:out"/>
+        </route>
+
+        <route>
+            <from uri="salesforce:CamelTestTopic?sObjectName=Account&amp;sObjectQuery=SELECT Id, Ownership FROM Account"/>
+            <to uri="mock:out"/>
+        </route>
+
+        <route>
+            <from uri="salesforce:CamelTestTopic?sObjectName=Lead&amp;sObjectQuery=SELECT Id, FirstName FROM Lead"/>
+            <to uri="mock:out"/>
+        </route>
+
+        <route>
+            <from uri="salesforce:CamelTestTopic?sObjectName=Account&amp;sObjectQuery=SELECT Id, Rating FROM Account"/>
+            <to uri="mock:out"/>
+        </route>
+
+        <route>
+            <from uri="salesforce:CamelTestTopic?sObjectName=Case&amp;sObjectQuery=SELECT Id, SuppliedEmail FROM Case"/>
+            <to uri="mock:out"/>
+        </route>
+
+        <route>
+            <from uri="salesforce:CamelTestTopic?sObjectName=Opportunity&amp;sObjectQuery=SELECT Id, Name, Amount FROM Opportunity"/>
+            <to uri="mock:out"/>
+        </route>
+
+        <route>
+            <from uri="salesforce:CamelTestTopic?sObjectName=Contact&amp;sObjectQuery=SELECT Id, Name FROM Contact"/>
+            <to uri="mock:out"/>
+        </route>
+
+        <route>
+            <from uri="salesforce:CamelTestTopic?sObjectName=Case&amp;sObjectQuery= SELECT Id, Subject FROM Case WHERE Status = 'Working' AND IsEscalated = TRUE"/>
+            <to uri="mock:out"/>
+        </route>
+        
+    </camelContext>
+
+</beans>

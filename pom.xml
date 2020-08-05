@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.redhat.ldemasi.issues</groupId>
+    <artifactId>camel-salseforce-sb1-entesb13823</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Camel Salesforce Spring Boot Route</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring.boot-version>1.5.22.RELEASE</spring.boot-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <version.java>1.8</version.java>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Boot BOM -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Camel BOM -->
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-spring-boot-dependencies</artifactId>
+                <version>2.21.0.fuse-760027-redhat-00001</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+        <!-- Camel -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-salesforce-starter</artifactId>
+        </dependency>
+
+
+        <!-- Spring Boot -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+
+        <!-- testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test-spring</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${project.basedir}/src/main/resources/application.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration combine.self="override">
+                    <source>${version.java}</source>
+                    <target>${version.java}</target>
+                    <testIncludes>
+                        <testInclude>**/*.java</testInclude>
+                    </testIncludes>
+                </configuration>
+            </plugin>
+            <!-- camel maven saleforce for creating salesforce objects -->
+            <plugin>
+                <groupId>org.jboss.redhat-fuse</groupId>
+                <artifactId>camel-salesforce-maven-plugin</artifactId>
+                <version>7.6.0.fuse-760027-redhat-00001</version>
+                <configuration>
+                    <outputDirectory>${project.basedir}/target/generated-sources</outputDirectory>
+                    <packageName>${camel.component.salesforce.packages}</packageName>
+                    <clientId>${camel.component.salesforce.client-id}</clientId>
+                    <clientSecret>${camel.component.salesforce.client-secret}</clientSecret>
+                    <userName>${camel.component.salesforce.user-name}</userName>
+                    <password>${camel.component.salesforce.password}</password>
+                    <loginUrl>${camel.component.salesforce.login-url}</loginUrl>
+                    <version>${camel.component.salesforce.config.api-version}</version>
+                    <includes>
+                        <include>Account</include>
+                        <include>Task</include>
+                        <include>Contact</include>
+                        <include>Opportunity</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>salesforce-objects</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot-version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
