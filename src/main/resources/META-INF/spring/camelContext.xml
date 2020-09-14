@@ -14,73 +14,73 @@
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopic?sObjectName=Case&amp;sObjectQuery= SELECT Id, Subject FROM Case WHERE Status = 'Working' AND IsEscalated = TRUE"/>
+            <from uri="salesforce:CamelTestTopicA?sObjectName=Case&amp;sObjectQuery= SELECT Id, Subject FROM Case WHERE Status = 'Working' AND IsEscalated = TRUE"/>
             <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopic?sObjectName=Lead&amp;replayId=-2"/>
+            <from uri="salesforce:CamelTestTopicB?sObjectName=Lead&amp;replayId=-2"/>
             <to uri="mock:replayIdTest"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopic?sObjectName=Account&amp;sObjectQuery=SELECT Id, Name FROM Account"/>
+            <from uri="salesforce:CamelTestTopicC?sObjectName=Account&amp;sObjectQuery=SELECT Id, Name FROM Account"/>
             <to uri="mock:resultA"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopic?sObjectName=Account&amp;sObjectQuery=SELECT Id, BillingStreet FROM Account"/>
+            <from uri="salesforce:CamelTestTopicD?sObjectName=Account&amp;sObjectQuery=SELECT Id, BillingStreet FROM Account"/>
             <log message="before enrich ${body}" />
             <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopic?sObjectName=Account&amp;sObjectQuery=SELECT Id, Ownership FROM Account"/>
+            <from uri="salesforce:CamelTestTopicE?sObjectName=Account&amp;sObjectQuery=SELECT Id, Ownership FROM Account"/>
             <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopicA?sObjectName=Opportunity&amp;sObjectQuery=SELECT Id, Name, Amount FROM Opportunity"/>
+            <from uri="salesforce:CamelTestTopicF?sObjectName=Opportunity&amp;sObjectQuery=SELECT Id, Name, Amount FROM Opportunity"/>
             <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopicA?sObjectName=Lead&amp;sObjectQuery=SELECT Id, FirstName FROM Lead"/>
+            <from uri="salesforce:CamelTestTopicG?sObjectName=Lead&amp;sObjectQuery=SELECT Id, FirstName FROM Lead"/>
             <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopicA?sObjectName=Account&amp;sObjectQuery=SELECT Id, Rating FROM Account"/>
+            <from uri="salesforce:CamelTestTopicH?sObjectName=Account&amp;sObjectQuery=SELECT Id, Rating FROM Account"/>
             <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopicA?sObjectName=Case&amp;sObjectQuery=SELECT Id, SuppliedEmail FROM Case"/>
+            <from uri="salesforce:CamelTestTopicI?sObjectName=Case&amp;sObjectQuery=SELECT Id, SuppliedEmail FROM Case"/>
             <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopicA?sObjectName=Case&amp;sObjectQuery=SELECT Id, SuppliedEmail, ParentId FROM Case"/>
+            <from uri="salesforce:CamelTestTopicJ?sObjectName=Case&amp;sObjectQuery=SELECT Id, SuppliedEmail, ParentId FROM Case"/>
             <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopicB?sObjectName=Contact&amp;sObjectQuery=SELECT Id, Name, FirstName, LastName FROM Contact"/>
+            <from uri="salesforce:CamelTestTopicK?sObjectName=Contact&amp;sObjectQuery=SELECT Id, Name, FirstName, LastName FROM Contact"/>
             <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopicB?sObjectName=Contact&amp;sObjectQuery=SELECT Id, Name FROM Contact"/>
+            <from uri="salesforce:CamelTestTopicL?sObjectName=Contact&amp;sObjectQuery=SELECT Id, Name FROM Contact"/>
             <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopicB?sObjectName=Contact&amp;sObjectQuery=SELECT Id, Name, AccountId FROM Contact"/>
+            <from uri="salesforce:CamelTestTopicM?sObjectName=Contact&amp;sObjectQuery=SELECT Id, Name, AccountId FROM Contact"/>
             <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="salesforce:CamelTestTopicB?sObjectName=Case&amp;sObjectQuery=SELECT Id, SuppliedEmail, AccountId FROM Case"/>
+            <from uri="salesforce:CamelTestTopicN?sObjectName=Case&amp;sObjectQuery=SELECT Id, SuppliedEmail, AccountId FROM Case"/>
             <to uri="mock:out"/>
         </route>
 
